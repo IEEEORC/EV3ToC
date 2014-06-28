@@ -15,7 +15,7 @@ A .ev3 file is a compressed folder that can be uncompressed using a tool like 7-
 The uncompressed folder contains multiple files but the only ones that we are concerned with are the .ev3p files. XML descriptions of the program. Please copy the correct .ev3p file and place it in the same directory as the ev32c.pl script. The .ev3p file should also be named Program.ev3p.
 
 Running
-perl ev32c.pl
+"perl ev32c.pl"
 will now produce a .c file in the same directory as the perl script.
 
 ### Who do I talk to? ###
