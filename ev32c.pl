@@ -120,6 +120,19 @@ sub traverse {
 			my $case = new CaseStatement($id, $test, $trueCode, $falseCode);
 			$blocks{$id} = $case if defined($id);
 		}
+		elsif ($_->nodeName eq "ConfigurableWaitFor") {
+			my $id = $_->getAttribute("Id");
+			my @info;
+			foreach ($_->childNodes()) {
+				if ($_->nodeName eq "ConfigurableMethodTerminal") {
+					#assuming terminals are always in the same order
+					push(@info, $_->getAttribute("ConfiguredValue"));
+				}
+			}
+			my $time = $info[0];
+			my $wait = new WaitBlock($id, $time);
+			$blocks{$id} = $wait if defined($id);
+		}
 	}
 	
 	# have to update wires now

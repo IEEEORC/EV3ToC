@@ -165,5 +165,34 @@ sub toCode {
 	return $code;
 }
 
+package WaitBlock;
+
+sub new {
+	my $class = shift;
+	my $self = {
+				id => shift,
+				time => shift
+	};
+	bless $self, $class;
+	return $self;
+}
+
+sub getId {
+	my ($self) = @_;
+	return $self->{id};
+}
+
+sub toCode {
+	my ($self, $indents) = @_;
+	
+	my $tabString = "";
+	for (1 .. $indents) {
+		$tabString .= "\t";
+	}
+	
+	my $code = "${tabString}delay($self->{time}000);\n";
+	return $code;
+}
+
 #end file
 1;
