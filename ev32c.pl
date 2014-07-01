@@ -3,8 +3,9 @@ use XML::LibXML;
 use Types;
 
 my $parser = XML::LibXML->new();
-#TODO: Make this take in the name of a file as an argument
-my $xml_doc = $parser->parse_file("Program.ev3p");
+my $xml_name = $ARGV[0];
+my $xml_doc = $parser->parse_file($xml_name);
+my $output_name = $ARGV[1];
 
 my @block_diagram = $xml_doc->getElementsByTagName('BlockDiagram');
 my $bd_node = $block_diagram[0];
@@ -14,6 +15,9 @@ $code .= traverse($bd_node);
 $code .= "}\n";
 
 #TODO: Make this print out to "<filename>.c"
+open (FILE, ">program.c");
+print FILE $code;
+close (FILE);
 print $code;
 
 sub traverse {
