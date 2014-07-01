@@ -9,6 +9,7 @@ sub new {
 				type => shift,
 				port => shift,
 				conditions => shift,
+				extra => shift,
 				inner_code => shift
 	};
 	bless $self, $class;
@@ -22,7 +23,7 @@ sub getId {
 
 sub toCode {
 	my ($self, $indents) = @_;
-	
+	my @logic = ("=", "!=", ">", ">=", "<", "<=");
 	my $cond = "";
 	if ($self->{type} eq "StopNever") {
 		$cond = "true";
@@ -30,6 +31,10 @@ sub toCode {
 	elsif ($self->{type} eq "ColorCompare") {
 		$self->{conditions} =~ /\[(\d)\]/;
 		$cond = "colorSensor.read() != $1";
+	}
+	elsif ($self->{type} eq "DistanceCMCompare") {
+		my $symbol = $logic[$self->{conditions}];
+		$cond = "!(distanceSensor.readCM() $symbol $self->{extra})";
 	}
 	my $tabString = "";
 	for (1 .. $indents) {

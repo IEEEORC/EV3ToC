@@ -9,7 +9,7 @@ my $xml_doc = $parser->parse_file("Program.ev3p");
 my @block_diagram = $xml_doc->getElementsByTagName('BlockDiagram');
 my $bd_node = $block_diagram[0];
 my $indents = 0;
-my $code = "void foo () {\n";
+my $code = "void run () {\n";
 $code .= traverse($bd_node);
 $code .= "}\n";
 
@@ -33,8 +33,8 @@ sub traverse {
 			#and possibly more blocks
 			my $id = $_->getAttribute("Id");
 			my @info = getWhileInfo($_);
-			my $while = new WhileLoop($id, $info[0], $info[1], $info[2], $inner_code);
-			#print "id: $id, while type: $info[0], port: $info[1], conditions: $info[2] \n";
+			my $while = new WhileLoop($id, $info[0], $info[1], $info[2], $info[3], $inner_code);
+			#print "id: $id, while type: $info[0], port: $info[1], conditions: $info[2], extra: $info[3] \n";
 			$blocks{$id} = $while if defined($id);
 			
 			
