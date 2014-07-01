@@ -89,5 +89,81 @@ sub toCode {
 	return $code;
 }
 
+package PairedStructure;
+
+sub new {
+	my $class = shift;
+	my $self = {
+				id => shift,
+				pair => shift,
+				compare => shift,
+				port => shift,
+				condition => shift
+	};
+	bless $self, $class;
+	return $self;
+}
+
+sub getPair {
+	my ($self) = @_;
+	return $self->{pair};
+}
+
+sub getId {
+	my ($self) = @_;
+	return $self->{id};
+}
+
+sub toCode {
+	my ($self, $indents) = @_;
+	$self->{compare} =~ m/(\w+)\\\..*/;
+	
+	my $code = "$1($self->{condition})";
+	return $code;
+}
+
+package CaseStatement;
+
+sub new {
+	my $class = shift;
+	my $self = {
+				id => shift,
+				test => shift,
+				trueCode => shift,
+				falseCode => shift
+	};
+	bless $self, $class;
+	return $self;
+}
+
+sub getId {
+	my ($self) = @_;
+	return $self->{id};
+}
+
+sub setTest {
+	my ( $self, $test ) = @_;
+    $self->{test} = $test if defined($test);
+    return $self->{test}
+
+}
+
+sub toCode {
+	my ($self, $indents) = @_;
+	
+	my $tabString = "";
+	for (1 .. $indents) {
+		$tabString .= "\t";
+	}
+	
+	my $code = "${tabString}if ($self->{test}) { \n";
+	$code .= "$self->{trueCode}\n";
+	$code .= "${tabString}}\n";
+	$code .= "${tabString}else { \n";
+	$code .= "$self->{falseCode}\n";
+	$code .= "${tabString}}\n";
+	return $code;
+}
+
 #end file
 1;
