@@ -30,11 +30,11 @@ sub toCode {
 	}
 	elsif ($self->{type} eq "ColorCompare") {
 		$self->{conditions} =~ /\[(\d)\]/;
-		$cond = "colorSensor.read() != $1";
+		$cond = "readColourSensor() != $1";
 	}
 	elsif ($self->{type} eq "DistanceCMCompare") {
 		my $symbol = $logic[$self->{conditions}];
-		$cond = "!(distanceSensor.readCM() $symbol $self->{extra})";
+		$cond = "!(readDistanceCM() $symbol $self->{extra})";
 	}
 	my $tabString = "";
 	for (1 .. $indents) {
