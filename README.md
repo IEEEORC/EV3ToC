@@ -21,4 +21,4 @@ Running
 will now produce a .c file in the same directory as the perl script.
 
 ### Contact ###
-Contact Bobby Wood at ieeeorcrd@gmail.com
+Contact Bobby Wood at ieeeorcrd \_at\_ gmail.com
